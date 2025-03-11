@@ -175,7 +175,7 @@ export default function Patients() {
           ) : (
             <div className="bg-white rounded-lg border shadow-sm p-8 text-center">
               <div className="h-20 w-20 rounded-full bg-gray-100 mx-auto flex items-center justify-center mb-4">
-                <Users className="h-10 w-10 text-gray-400" />
+                <User className="h-10 w-10 text-gray-400" />
               </div>
               <h3 className="text-lg font-medium mb-2">No patients found</h3>
               <p className="text-gray-500 mb-6 max-w-md mx-auto">
