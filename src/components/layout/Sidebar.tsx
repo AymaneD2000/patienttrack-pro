@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import {
@@ -12,6 +12,8 @@ import {
   Settings,
   BookOpen,
   DollarSign,
+  UserCog,
+  Shield,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -24,6 +26,7 @@ interface NavItem {
   href: string;
   icon: React.ElementType;
   badge?: string;
+  adminOnly?: boolean;
 }
 
 const primaryNavItems: NavItem[] = [
@@ -34,11 +37,13 @@ const primaryNavItems: NavItem[] = [
   { title: "Billing", href: "/billing", icon: DollarSign },
   { title: "Exercises", href: "/exercises", icon: BookOpen },
   { title: "Reports", href: "/reports", icon: BarChart },
+  { title: "User Management", href: "/users", icon: UserCog, adminOnly: true },
   { title: "Settings", href: "/settings", icon: Settings },
 ];
 
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const location = useLocation();
+  const [isAdmin, setIsAdmin] = useState(true); // For demo purposes, assuming user is admin
 
   // Close sidebar on mobile when route changes
   useEffect(() => {
@@ -71,6 +76,11 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
     };
   }, [isOpen, onClose]);
 
+  // Filter nav items based on user role
+  const filteredNavItems = primaryNavItems.filter(
+    item => !item.adminOnly || (item.adminOnly && isAdmin)
+  );
+
   return (
     <>
       {/* Overlay for mobile */}
@@ -94,7 +104,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
       >
         <div className="flex-1 overflow-y-auto py-4 px-3">
           <nav className="space-y-1">
-            {primaryNavItems.map((item) => (
+            {filteredNavItems.map((item) => (
               <NavLink
                 key={item.href}
                 to={item.href}
@@ -114,6 +124,9 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                   <span className="ml-2 inline-flex h-5 items-center justify-center rounded-full bg-primary px-2 text-xs font-medium text-white">
                     {item.badge}
                   </span>
+                )}
+                {item.adminOnly && (
+                  <Shield className="ml-2 h-3.5 w-3.5 text-primary/70" />
                 )}
                 <ChevronRight
                   className={cn(

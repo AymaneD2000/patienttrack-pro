@@ -17,6 +17,8 @@ import RecordCreate from "./pages/RecordCreate";
 import Billing from "./pages/Billing";
 import Exercises from "./pages/Exercises";
 import ExerciseCreate from "./pages/ExerciseCreate";
+import Reports from "./pages/Reports";
+import UserManagement from "./pages/UserManagement";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,6 +44,8 @@ const App = () => (
           <Route path="/billing/new" element={<Billing />} />
           <Route path="/exercises" element={<Exercises />} />
           <Route path="/exercises/new" element={<ExerciseCreate />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/users" element={<UserManagement />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
